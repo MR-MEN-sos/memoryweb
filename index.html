@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>haii err</title>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@400;600;700&family=Cormorant+Garamond:wght@400;600;700&family=Montserrat:wght@500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* ===== GLOBAL STYLES ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Nunito Sans', sans-serif;
+            font-weight: 400;
+            line-height: 1.7;
+            color: #4a4a4a;
+            background-color: #ffebee;
+        }
+        
+        /* ===== PASSWORD SCREEN ===== */
+        .password-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            transition: all 0.5s ease;
+        }
+        
+        .password-container {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+        
+        .password-container h1 {
+            color: #e91e63;
+            margin-bottom: 20px;
+        }
+        
+        .password-container p {
+            margin-bottom: 20px;
+            color: #555;
+        }
+        
+        #password-input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e91e63;
+            border-radius: 8px;
+            font-size: 16px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        #submit-password {
+            background-color: #e91e63;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        #submit-password:hover {
+            background-color: #c2185b;
+            transform: translateY(-2px);
+        }
+        
+        .error-message {
+            color: #f44336;
+            margin-top: 10px;
+            display: none;
+        }
+        
+        /* ===== MAIN CONTENT ===== */
+        .main-content {
+            display: none;
+            opacity: 0;
+            transition: opacity 1s;
+        }
+        
+        /* HEADER */
+        header {
+            background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+        }
+        
+        .nav-buttons button {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            margin-left: 10px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .nav-buttons button:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+        
+        /* SCRAPBOOK PAGES */
+        .scrapbook-container {
+            max-width: 1000px;
+            margin: 30px auto;
+            position: relative;
+            min-height: 70vh;
+        }
+        
+        .page {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            margin-bottom: 30px;
+            display: none;
+            animation: fadeIn 0.8s;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        .page-number {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: #e91e63;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 14px;
+        }
+        
+        .page h2 {
+            color: #e91e63;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 28px;
+            border-bottom: 2px dashed #ffcdd2;
+            padding-bottom: 10px;
+        }
+        
+        .page-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+        
+        .memory-card {
+            background: #fff9f9;
+            border-radius: 10px;
+            padding: 15px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+            width: calc(50% - 20px);
+            min-width: 300px;
+            transition: transform 0.3s;
+            border: 1px solid #ffebee;
+        }
+        
+        .memory-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .memory-card h3 {
+            color: #e91e63;
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+        
+        .memory-card p {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .polaroid {
+            background: white;
+            padding: 15px 15px 40px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transform: rotate(-2deg);
+            width: fit-content;
+            margin: 20px auto;
+        }
+        
+        .polaroid img {
+            width: 250px;
+            height: 250px;
+            object-fit: cover;
+            border: 1px solid #eee;
+        }
+        
+        .polaroid p {
+            text-align: center;
+            margin-top: 10px;
+            font-style: italic;
+            color: #666;
+        }
+        
+        .love-note {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 18px;
+            font-style: italic;
+            background: #fff0f3;
+            border-left: 4px solid #e91e63;
+            padding: 15px;
+            margin: 20px 0;
+            position: relative;
+            line-height: 1.6;
+        }
+        
+        .long-message {
+            font-family: 'Nunito Sans', sans-serif;
+            font-size: 16px;
+            line-height: 1.8;
+            color: #444;
+            padding: 20px;
+            background-color: #fff9f9;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        
+        /* NAVIGATION */
+        .page-navigation {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+            gap: 10px;
+        }
+        
+        .page-navigation button {
+            background: #e91e63;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .page-navigation button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        
+        .page-navigation button:hover:not(:disabled) {
+            background: #c2185b;
+            transform: translateY(-2px);
+        }
+        
+        /* DINO GAME */
+        .game-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+        }
+        
+        .game-button {
+            background: #e91e63;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s;
+            border: none;
+        }
+        
+        .game-button:hover {
+            transform: scale(1.1) rotate(15deg);
+            background: #c2185b;
+        }
+        
+        .dino-game {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 400px;
+            height: 200px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            display: none;
+            z-index: 101;
+        }
+        
+        .dino-game.active {
+            display: block;
+        }
+        
+        .game-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .close-game {
+            background: #f44336;
+            color: white;
+            border: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        
+        #game-canvas {
+            background: #f7f7f7;
+            border: 1px solid #ddd;
+            width: 100%;
+            height: 150px;
+        }
+        
+        /* FOOTER */
+        footer {
+            background: linear-gradient(135deg, #ff758c 0%, #ff7eb3 100%);
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 50px;
+        }
+        
+        .heart {
+            color: #e91e63;
+            animation: heartbeat 1.5s infinite;
+            display: inline-block;
+        }
+        
+        @keyframes heartbeat {
+            0% { transform: scale(1); }
+            25% { transform: scale(1.1); }
+            50% { transform: scale(1); }
+            75% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+        
+        /* RESPONSIVE */
+        @media (max-width: 768px) {
+            .memory-card {
+                width: 100%;
+            }
+            
+            .dino-game {
+                width: calc(100% - 40px);
+                right: 20px;
+                left: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Password Screen -->
+    <div class="password-screen" id="passwordScreen">
+        <div class="password-container">
+            <h1><i class="fas fa-lock"></i> memory website</h1>
+            <p>password e tanggal jadian e kne er<br>(contoh 01012020)</p>
+            <input type="password" id="password-input" placeholder="lebokno password e er">
+            <button id="submit-password">buka</button>
+            <p class="error-message" id="error-message">password salah er.</p>
+        </div>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <header>
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-heart"></i> memory web
+                </div>
+                <div class="nav-buttons">
+                    <button id="music-toggle"><i class="fas fa-music"></i> Musik for you</button>
+                    <button id="game-toggle"><i class="fas fa-gamepad"></i> Game</button>
+                </div>
+            </div>
+        </header>
+        
+        <div class="scrapbook-container">
+            <!-- Page 1 -->
+            <div class="page active" id="page1">
+                <div class="page-number">1</div>
+                <h2>pencet musik e err</h2>
+                <div class="page-content">
+                    <div class="memory-card">
+                        <h3>selasa 23 januari 2024</h3>
+                        <p>aku sek ileng fotbar pertama e kene, pas dino iku aku ga nyongko iso fotbar karo amu</p>
+                        <div class="love-note">
+                            amu ngerti? pas kene pertama fotbar rasane iku aku wedi tapi seneng. wedine aku bakal dadi knokmu maneh, seneng e yo mergo iso foto karo amu
+                        </div>
+                    </div>
+                    <div class="memory-card">
+                        <h3></h3>
+                        <p></p>
+                        <div class="polaroid">
+                            <img src="foto1.jpg" alt="Pertemuan pertama kita">
+                            <p></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Page 2 -->
+            <div class="page" id="page2">
+                <div class="page-number">2</div>
+                <h2>selamat menikmati</h2>
+                <div class="page-content">
+                    <div class="memory-card">
+                        <h3>16 april 2024</h3>
+                        <p>ileng ga er pertama kaline kene metuu??</p>
+                        <div class="love-note">
+                            wkwk lucu yoo?? perasaan kyo lagek wingi lohh jirr, tapi gapopo, amu saikii ketok e yo luweh bahagia..
+                        </div>
+                    </div>
+                    <div class="memory-card">
+                        <h3></h3>
+                        <p></p>
+                        <div class="polaroid">
+                            <img src="foto2.jpg" alt="Kencan pertama kita">
+                            <p></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+                        <div class="page active" id="page3">
+                <div class="page-number">3</div>
+                <h2>selamat menikmati</h2>
+                <div class="page-content">
+                    <div class="memory-card">
+                        <h3>9 mei 2024</h3>
+                        <p>ileeng ga pas kene pertama kali nak wpp?</p>
+                        <div class="love-note">
+                            seng kene dulinan pasir, terus nemu permen ga salah yo?? embo se lali lali ileng, seweruu jirr, soal e bareng amuu... ea
+                        </div>
+                    </div>
+                    <div class="memory-card">
+                        <h3></h3>
+                        <p></p>
+                        <div class="polaroid">
+                            <img src="foto3.jpg" alt="Pertemuan pertama kita">
+                            <p></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+                        <div class="page active" id="page4">
+                <div class="page-number">4</div>
+                <h2>selamat menikmati</h2>
+                <div class="page-content">
+                    <div class="memory-card">
+                        <h3>21 mei 2024</h3>
+                        <p>awokawok iki momen paleng lucuu sehh, beberapa jam sak gurunge di omeng anong</p>
+                        <div class="love-note">
+                            pas tepak iku aku ws gupoi mule tp amu seh ga gelem, tp gaopo mergo iku kene nduwe momen se seru iku wkwkwk
+                        </div>
+                    </div>
+                    <div class="memory-card">
+                        <h3></h3>
+                        <p></p>
+                        <div class="polaroid">
+                            <img src="foto4.jpg" alt="Pertemuan pertama kita">
+                            <p></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+                        <div class="page active" id="page5">
+                <div class="page-number">5</div>
+                <h2>selamat menikmati</h2>
+                <div class="page-content">
+                    <div class="memory-card">
+                        <h3>11 juni 2024</h3>
+                        <p>iki amu pas nak kendalifornia er, lucuu yyooo???</p>
+                        <div class="love-note">
+                            pas tepak iku kene gae seng teko canfas iku err, owh iyoo.. canfas e sek mok simpen kan?
+                        </div>
+                    </div>
+                    <div class="memory-card">
+                        <h3></h3>
+                        <p></p>
+                        <div class="polaroid">
+                            <img src="foto5.jpg" alt="Pertemuan pertama kita">
+                            <p></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+                        <div class="page active" id="page6">
+                <div class="page-number">6</div>
+                <h2>selamat menikmati</h2>
+                <div class="page-content">
+                    <div class="memory-card">
+                        <h3>14 juni 2024</h3>
+                        <p>ikuu fotbar terakhir e kene sak gurung e aku nak bandung err..</p>
+                        <div class="love-note">
+                            ileng ga seh err?? biyen pas aku ws nak bus terus kacek pirang menit ngunu amu ngechat aku terus amu ngomong lek amu uws kangen, wkwkwk iso ngunu yo?
+                        </div>
+                    </div>
+                    <div class="memory-card">
+                        <h3></h3>
+                        <p></p>
+                        <div class="polaroid">
+                            <img src="foto6.jpg" alt="Pertemuan pertama kita">
+                            <p></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+                        <div class="page active" id="page7">
+                <div class="page-number">7</div>
+                <h2>selamat menikmati</h2>
+                <div class="page-content">
+                    <div class="memory-card">
+                        <h3>20 juni 2024</h3>
+                        <p>err.. iki pas amuu fotbar karoo ibukku</p>
+                        <div class="love-note">
+                            eruu ga er? amu iku wedok pertama seng di trimo kro ibukku, ora ibukku tok, nak keluargaku malah, sampek saiki keluargaku ngiroe aku sek karo amu... kae aku di takoni sek karo amu to ora, tak jawab isekk, wkwk sepurane yo er? kyone gurung waktune aku ngomong ngunu, mben tk omongane dwe ae
+                        </div>
+                    </div>
+                    <div class="memory-card">
+                        <h3></h3>
+                        <p></p>
+                        <div class="polaroid">
+                            <img src="foto7.jpg" alt="Pertemuan pertama kita">
+                            <p></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+                        <div class="page active" id="page8">
+                <div class="page-number">8</div>
+                <h2>selamat menikmati</h2>
+                <div class="page-content">
+                    <div class="memory-card">
+                        <h3>15 juli 2024</h3>
+                        <p>iku pas kene ngurusii bocah bocah mpls err</p>
+                        <div class="love-note">
+                            iku ga salah pas aku njlok sudokno sopo seng seneng aku ben aku iso manas manas i cah e, wkwkwk kene biyen ngono yo??
+                        </div>
+                    </div>
+                    <div class="memory-card">
+                        <h3></h3>
+                        <p></p>
+                        <div class="polaroid">
+                            <img src="foto8.jpg" alt="Pertemuan pertama kita">
+                            <p></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+                        <div class="page active" id="page9">
+                <div class="page-number">9</div>
+                <h2>selamat menikmati</h2>
+                <div class="page-content">
+                    <div class="memory-card">
+                        <h3>27 juli 2024</h3>
+                        <p>iki pas kene nak omahh kopi er...</p>
+                        <div class="love-note">
+                            kenangan e kene nak omah kopi akeh yo? misal kene nduwe wacana tapi ora kelakon mestii kene runuu, opo maneh nak lesehan e, wkwkwk guyonn teruss
+                        </div>
+                    </div>
+                    <div class="memory-card">
+                        <h3></h3>
+                        <p></p>
+                        <div class="polaroid">
+                            <img src="foto9.jpg" alt="Pertemuan pertama kita">
+                            <p></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+                        <div class="page active" id="page10">
+                <div class="page-number">10</div>
+                <h2>selamat menikmati</h2>
+                <div class="page-content">
+                    <div class="memory-card">
+                        <h3>13 agustus 2024</h3>
+                        <p>lek iki pas clasmeet agustusan er</p>
+                        <div class="love-note">
+                            wkwk kene biyen lek ono trend anyar mesti gae yo?? teruss amu byen yo tau ngongkon aku gae trend sang adel iku lo... seng pas aku nak bandung, wkwkwk lucu yo??
+                        </div>
+                    </div>
+                    <div class="memory-card">
+                        <h3></h3>
+                        <p></p>
+                        <div class="polaroid">
+                            <img src="foto10.jpg" alt="Pertemuan pertama kita">
+                            <p></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+                        <div class="page active" id="page11">
+                <div class="page-number">11</div>
+                <h2>selamat menikmati</h2>
+                <div class="page-content">
+                    <div class="memory-card">
+                        <h3>5 november 2024</h3>
+                        <p>lek iki pas acara osis nak wpp er</p>
+                        <div class="love-note">
+                            iki yo pertama kaline aku boncengan karo wedok, rasane iku wedi, gemeterann tapi iku yoan sebuah pencapaian lek aku pernah bonceng amu er..
+                        </div>
+                    </div>
+                    <div class="memory-card">
+                        <h3></h3>
+                        <p></p>
+                        <div class="polaroid">
+                            <img src="foto11.jpg" alt="Pertemuan pertama kita">
+                            <p></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+                        <div class="page active" id="page12">
+                <div class="page-number">12</div>
+                <h2>selamat menikmati</h2>
+                <div class="page-content">
+                    <div class="memory-card">
+                        <h3>5 november 2024</h3>
+                        <p>mari teko wpp kene langsung nak tebing caffe er</p>
+                        <div class="love-note">
+                            owhh iyoo er.. jare dulinan pasir pasir an e mok gwo kan yoo??? ojo sampek ilang yoo err??
+                        </div>
+                    </div>
+                    <div class="memory-card">
+                        <h3></h3>
+                        <p>
+                        .</p>
+                        <div class="polaroid">
+                            <img src="foto12.jpg" alt="Pertemuan pertama kita">
+                            <p></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+                        <div class="page active" id="page13">
+                <div class="page-number">13</div>
+                <h2>selamat menikmati</h2>
+                <div class="page-content">
+                    <div class="memory-card">
+                        <h3>27 november 2024</h3>
+                        <p>lekk iki pas ldk nak mokjokerto err</p>
+                        <div class="love-note">
+                            wkwk kenangan e kene nak osis akehh yo?? ileng ga kene biyen parek maneh iku yo mergo osis, yo gae hadiah, rapat, terus ngehandle clasmeet, wkwk seruu yo??
+                        </div>
+                    </div>
+                    <div class="memory-card">
+                        <h3></h3>
+                        <p></p>
+                        <div class="polaroid">
+                            <img src="foto13.jpg" alt="Pertemuan pertama kita">
+                            <p></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="page active" id="page14">
+                <div class="page-number">14</div>
+                <h2>selamat menikmati</h2></h2>
+                <div class="page-content">
+                    <div class="memory-card">
+                        <h3>17 januari 2025</h3>
+                        <p>lekk iki potbar pas marine kene putuss err..</p>
+                        <div class="love-note">
+                            er... kene biyen putus tapi balek maneh terus putus tapi sek komunikasian maneh, tapi saiki uws ga iso yo, tp gaopo lah. amu biyen pernah ngomong lek jodoh bakal e nyatu kan?? wkwk paling gurung wayae e ae er perjalanan e kene sek adoh.. di nikmati ae sek, ga seharus e yoan boca sak umuran e kene mikirno ngonoku
+                        </div>
+                    </div>
+                    <div class="memory-card">
+                        <h3></h3>
+                        <p></p>
+                        <div class="polaroid">
+                            <img src="foto14.jpg" alt="Pertemuan pertama kita">
+                            <p></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
+    </script>
+</body>
+</html>
+            
+            
+            <!-- Page 15 - Long Message -->
+            <div class="page" id="page15">
+                <div class="page-number">15</div>
+                <h2>terakhir er</h2>
+                <div class="page-content">
+                    <div class="long-message">
+                        <p>haii maniss,</p>
+                        
+                        <p>wkwk pie kabar e? sehat sehat yyooo?? aku ga bakal yapping akeh akeh ko... aku mok pengen njalok sepuro karo suwon..</p>
+                        
+                        <p>ehmm sepurane yo lek pas amu karo aku ga sebahagia pas amu karo wong liyo, sepurane yoan lek biyen karo aku amu ga nyaman... sepurane yoo?? eh suwon yoan wes mampir nak webku, hehe elek yo? ? aku lagek belajar gae web polaee..</p>
+                        
+                        <p>eh iyoo, krungu krungu amu uws seneng uwong? widihh selamat yo err, bahagia terus yoo karo pilihanmu...</p>
+                        
+                        <p>huft... aku kangen amu er, kawangenn rasane. nek di ileng ileng kene biyen lucu yo?? biyen kene biasane lek prei ngunu nak omah kopi yoo.. kadang yo pas mule sekolah.. wkwk kilingan guyon e kene biyenn err.. rasane kyo lagek wingi. ileng ga seh? pas kene biyen apene nak tebing caffe cah 2, terus ketemu bocil seng raine full wedakk... wkwkk lucuu yyooo??</p>
+                        
+                        <p>kene biyen lek ono uwong lewatt mesti di paido yyoo?? wkwk..</p>
+                        
+                        <p>ehmm er... eru ga?? mang pas wisuda akuu nguwasii amu terus... berusaha ngerungokno soromu... gae terakhir kaline er, kyone iki terakhir kaline aku ngewasi amu?? cek mben aku lek kangen amu aku iso ngiling momen iki er... he er eru ga?? pawatan ikhlas iku pegell yyoo?? suwon yo er pernah mampir nak uripku
+                        </p>
+                        
+                        <p>amuu isek nduwe foto iki ga er?? huft.. ga nyongko kene bakal ngene... mesio aku seng ngeakhir tapi goblok e aku yoan seng berharap amu balek..
+                        </p>
+                        
+                        <p>see you next time yo err???</p>
+                    </div>
+                    <div class="polaroid">
+                        <img src="foto15.jpg" alt="Momen spesial kita">
+                        <p>bahagia terus yo err...</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Navigation -->
+            <div class="page-navigation">
+                <button id="prev-page"><i class="fas fa-arrow-left"></i> balek er </button>
+                <button id="next-page"> lanjut er <i class="fas fa-arrow-right"></i></button>
+            </div>
+        </div>
+        
+        <!-- Dino Game -->
+        <div class="game-container">
+            <button class="game-button" id="game-button">
+                <i class="fas fa-gamepad"></i>
+            </button>
+            <div class="dino-game" id="dino-game">
+                <div class="game-header">
+                    <h3>Game</h3>
+                    <button class="close-game" id="close-game">&times;</button>
+                </div>
+                <canvas id="game-canvas"></canvas>
+                <p style="text-align: center; margin-top: 5px;">pencet gae mencolot</p>
+            </div>
+        </div>
+        
+        <footer>
+            <p>selamat menikmati cantikkk</p>
+        </footer>
+    </div>
+    
+    <!-- Music -->
+    <audio id="background-music" loop>
+        <source src="musik.mp3" type="audio/mpeg">
+    </audio>
+    
+    <script>
+        // Password Protection
+        const passwordScreen = document.getElementById('passwordScreen');
+        const mainContent = document.getElementById('mainContent');
+        const passwordInput = document.getElementById('password-input');
+        const submitPassword = document.getElementById('submit-password');
+        const errorMessage = document.getElementById('error-message');
+        
+        const correctPassword = "16062023";
+        
+        function checkPassword() {
+            if (passwordInput.value === correctPassword) {
+                passwordScreen.style.opacity = '0';
+                setTimeout(() => {
+                    passwordScreen.style.display = 'none';
+                    mainContent.style.display = 'block';
+                    setTimeout(() => {
+                        mainContent.style.opacity = '1';
+                    }, 100);
+                }, 500);
+            } else {
+                errorMessage.style.display = 'block';
+                passwordInput.style.borderColor = '#f44336';
+                setTimeout(() => {
+                    errorMessage.style.display = 'none';
+                }, 2000);
+            }
+        }
+        
+        submitPassword.addEventListener('click', checkPassword);
+        passwordInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') checkPassword();
+        });
+        
+        // Page Navigation
+        let currentPage = 1;
+        const totalPages = 15;
+        const prevButton = document.getElementById('prev-page');
+        const nextButton = document.getElementById('next-page');
+        
+        function showPage(pageNumber) {
+            if (pageNumber < 1) pageNumber = 1;
+            if (pageNumber > totalPages) pageNumber = totalPages;
+            
+            document.querySelectorAll('.page').forEach(page => {
+                page.classList.remove('active');
+            });
+            
+            const pageElement = document.getElementById(`page${pageNumber}`);
+            if (pageElement) {
+                pageElement.classList.add('active');
+                currentPage = pageNumber;
+                
+                prevButton.disabled = currentPage === 1;
+                nextButton.disabled = currentPage === totalPages;
+            }
+        }
+        
+        prevButton.addEventListener('click', () => showPage(currentPage - 1));
+        nextButton.addEventListener('click', () => showPage(currentPage + 1));
+        
+        // Music Toggle
+        const musicToggle = document.getElementById('music-toggle');
+        const backgroundMusic = document.getElementById('background-music');
+        let isMusicPlaying = false;
+        
+        // Handle autoplay policy
+        document.addEventListener('click', function() {
+            if (!isMusicPlaying) {
+                backgroundMusic.play().then(() => {
+                    backgroundMusic.pause();
+                    backgroundMusic.currentTime = 0;
+                });
+            }
+        }, { once: true });
+        
+        musicToggle.addEventListener('click', () => {
+            if (isMusicPlaying) {
+                backgroundMusic.pause();
+                musicToggle.innerHTML = '<i class="fas fa-music"></i> Musik';
+            } else {
+                backgroundMusic.play().catch(e => {
+                    alert("Silakan klik tombol Musik lagi untuk memulai");
+                });
+                musicToggle.innerHTML = '<i class="fas fa-volume-up"></i> Musik';
+            }
+            isMusicPlaying = !isMusicPlaying;
+        });
+        
+        // Dino Game
+        const gameButton = document.getElementById('game-button');
+        const gameContainer = document.getElementById('dino-game');
+        const closeGame = document.getElementById('close-game');
+        let gameInitialized = false;
+        
+        gameButton.addEventListener('click', () => {
+            gameContainer.classList.toggle('active');
+            if (gameContainer.classList.contains('active') && !gameInitialized) {
+                initGame();
+                gameInitialized = true;
+            }
+        });
+        
+        closeGame.addEventListener('click', () => {
+            gameContainer.classList.remove('active');
+        });
+        
+        function initGame() {
+            const canvas = document.getElementById('game-canvas');
+            const ctx = canvas.getContext('2d');
+            canvas.width = canvas.offsetWidth;
+            canvas.height = canvas.offsetHeight;
+            
+            // Game variables
+            const dino = {
+                x: 50,
+                y: canvas.height - 50,
+                width: 40,
+                height: 60,
+                jumping: false,
+                jumpVelocity: 0,
+                gravity: 0.5
+            };
+            
+            const obstacles = [];
+            let gameSpeed = 5;
+            let score = 0;
+            let gameOver = false;
+            let animationId;
+            
+            // Game functions
+            function drawDino() {
+                ctx.fillStyle = '#555';
+                ctx.fillRect(dino.x, dino.y - dino.height, dino.width, dino.height);
+                
+                // Eyes
+                ctx.fillStyle = 'white';
+                ctx.fillRect(dino.x + 10, dino.y - dino.height + 15, 8, 8);
+                ctx.fillRect(dino.x + 25, dino.y - dino.height + 15, 8, 8);
+                
+                // Pupils
+                ctx.fillStyle = 'black';
+                ctx.fillRect(dino.x + 12, dino.y - dino.height + 17, 4, 4);
+                ctx.fillRect(dino.x + 27, dino.y - dino.height + 17, 4, 4);
+            }
+            
+            function drawObstacles() {
+                ctx.fillStyle = '#333';
+                obstacles.forEach(obstacle => {
+                    ctx.fillRect(obstacle.x, obstacle.y - obstacle.height, obstacle.width, obstacle.height);
+                });
+            }
+            
+            function drawScore() {
+                ctx.fillStyle = '#000';
+                ctx.font = '20px Montserrat';
+                ctx.fillText(`Score: ${score}`, 20, 30);
+            }
+            
+            function drawGameOver() {
+                ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                ctx.fillStyle = '#fff';
+                ctx.font = '30px Montserrat';
+                ctx.textAlign = 'center';
+                ctx.fillText('kalah', canvas.width / 2, canvas.height / 2 - 30);
+                ctx.fillText(`Score: ${score}`, canvas.width / 2, canvas.height / 2 + 10);
+                ctx.font = '20px Montserrat';
+                ctx.fillText('amu mok kalah nak game, ogak nk atiku', canvas.width / 2, canvas.height / 2 + 50);
+                ctx.textAlign = 'left';
+            }
+            
+            function updateDino() {
+                if (dino.jumping) {
+                    dino.y += dino.jumpVelocity;
+                    dino.jumpVelocity += dino.gravity;
+                    
+                    if (dino.y > canvas.height - 50) {
+                        dino.y = canvas.height - 50;
+                        dino.jumping = false;
+                    }
+                }
+            }
+            
+            function updateObstacles() {
+                if (Math.random() < 0.02) {
+                    const height = 20 + Math.random() * 30;
+                    obstacles.push({
+                        x: canvas.width,
+                        y: canvas.height - 50,
+                        width: 20,
+                        height: height
+                    });
+                }
+                
+                for (let i = obstacles.length - 1; i >= 0; i--) {
+                    obstacles[i].x -= gameSpeed;
+                    
+                    if (obstacles[i].x + obstacles[i].width < 0) {
+                        obstacles.splice(i, 1);
+                        score++;
+                        
+                        if (score % 10 === 0) {
+                            gameSpeed += 0.5;
+                        }
+                    }
+                }
+            }
+            
+            function checkCollisions() {
+                const dinoLeft = dino.x;
+                const dinoRight = dino.x + dino.width;
+                const dinoTop = dino.y - dino.height;
+                const dinoBottom = dino.y;
+                
+                for (const obstacle of obstacles) {
+                    const obstacleLeft = obstacle.x;
+                    const obstacleRight = obstacle.x + obstacle.width;
+                    const obstacleTop = obstacle.y - obstacle.height;
+                    const obstacleBottom = obstacle.y;
+                    
+                    if (dinoRight > obstacleLeft && 
+                        dinoLeft < obstacleRight && 
+                        dinoBottom > obstacleTop && 
+                        dinoTop < obstacleBottom) {
+                        gameOver = true;
+                    }
+                }
+            }
+            
+            function gameLoop() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                if (!gameOver) {
+                    updateDino();
+                    updateObstacles();
+                    checkCollisions();
+                    
+                    drawDino();
+                    drawObstacles();
+                    drawScore();
+                    
+                    animationId = requestAnimationFrame(gameLoop);
+                } else {
+                    drawGameOver();
+                }
+            }
+            
+            function jump() {
+                if (!dino.jumping && !gameOver) {
+                    dino.jumping = true;
+                    dino.jumpVelocity = -12;
+                } else if (gameOver) {
+                    // Reset game
+                    obstacles.length = 0;
+                    dino.y = canvas.height - 50;
+                    dino.jumping = false;
+                    score = 0;
+                    gameSpeed = 5;
+                    gameOver = false;
+                    gameLoop();
+                }
+            }
+            
+            // Event listeners
+            document.addEventListener('keydown', (e) => {
+                if (e.code === 'Space') {
+                    e.preventDefault();
+                    jump();
+                }
+            });
+            
+            canvas.addEventListener('click', jump);
+            
+            // Start game
+            gameLoop();
+        }
+        
+        // Initialize
+        showPage(1);
+    </script>
+</body>
+</html>
